@@ -1,6 +1,7 @@
 name: Build XLibre packages for Slackware 15.0
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -50,7 +51,13 @@ jobs:
           cd ..
       - name: Generate blacklist file
         run: |
-          mkdir build_artifacts
+          if [ -e build_artifacts ]; then
+            echo "Recreating build artifacts directory"
+            rm -r build_artifacts && mkdir build_artifacts
+          else
+            echo "Creating artifacts directory"
+            mkdir build_artifacts
+          fi
           BLACKLIST_FILE=build_artifacts/blacklist $GITHUB_WORKSPACE/generate_slackpkg_blacklist.sh
           cat << EOF >> build_artifacts/blacklist
           libva
