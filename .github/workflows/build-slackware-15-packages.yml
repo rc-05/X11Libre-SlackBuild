@@ -28,9 +28,10 @@ jobs:
       image: aclemons/slackware:15.0-full
     steps:
       - uses: actions/checkout@v5
-      - uses: c-hive/gha-remove-artifacts@v1
+      - uses: geekyeggo/delete-artifact@v5
         with:
-          age: '1 day'
+          name: build_artifacts
+          failOnError: false
       - name: Download testing and extra packages
         run: |
           mkdir testing && cd testing
