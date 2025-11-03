@@ -28,6 +28,9 @@ jobs:
       image: aclemons/slackware:15.0-full
     steps:
       - uses: actions/checkout@v5
+      - uses: c-hive/gha-remove-artifacts@v1
+        with:
+          age: '1 day'
       - name: Download testing and extra packages
         run: |
           mkdir testing && cd testing
@@ -72,8 +75,8 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: CI Build
-          path:
-            build_artifacts
+          path: build_artifacts
+          retention-days: 1
       - name: Get short commit hash with date and time
         id: git_short_hash_and_release_date
         run: |
