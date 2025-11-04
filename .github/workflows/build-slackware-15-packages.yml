@@ -18,6 +18,9 @@ permissions:
 jobs:
   push_container:
     runs-on: ubuntu-latest
+    steps:
+      - name: Delete huge unnecessary tools folder
+        run: rm -rf /opt/hostedtoolcache
     services:
       docker:
         image: docker:dind
@@ -29,11 +32,6 @@ jobs:
       image: aclemons/slackware:15.0-full
     steps:
       - uses: actions/checkout@v5
-      - name: Free disk space
-        run: |
-          echo "Before cleanup: $(du -h -s --si /opt/hostedtoolcache)"
-          find /opt/hostedtoolcache -mindepth 1 -maxdepth 1 -exec rm -rf {} +;
-          echo "After cleanup: $(du -h -s --si /opt/hostedtoolcache)"
       - name: Download testing and extra packages
         run: |
           mkdir testing && cd testing
