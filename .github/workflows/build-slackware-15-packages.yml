@@ -30,9 +30,9 @@ jobs:
       - uses: actions/checkout@v5
       - name: Free disk space
         run: |
-          echo "Before cleanup: $(du -h -s --si /tmp)"
-          find /tmp -mindepth 1 -maxdepth 1 -exec rm -rf {} +;
-          echo "After cleanup: $(du -h -s --si /tmp)"
+          echo "Before cleanup: $(du -h -s --si /opt/hostedtoolcache)"
+          find /opt/hostedtoolcache -mindepth 1 -maxdepth 1 -exec rm -rf {} +;
+          echo "After cleanup: $(du -h -s --si /opt/hostedtoolcache)"
       - name: Download testing and extra packages
         run: |
           mkdir testing && cd testing
