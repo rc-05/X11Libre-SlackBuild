@@ -27,7 +27,6 @@ jobs:
         options: --privileged
         volumes:
           - /var/run/docker.sock:/var/run/docker.sock:ro
-          - /opt/hostedtoolcache:/opt/hostedtoolcache
     container:
       image: aclemons/slackware:15.0-full
     steps:
