@@ -28,6 +28,11 @@ jobs:
       image: aclemons/slackware:15.0-full
     steps:
       - uses: actions/checkout@v5
+      - name: Free disk space
+        run: |
+          echo "Before cleanup: $(du -h -s --si /tmp)"
+          find /tmp -mindepth 1 -maxdepth 1 -exec rm -rf {} +;
+          echo "After cleanup: $(du -h -s --si /tmp)"
       - name: Download testing and extra packages
         run: |
           mkdir testing && cd testing
@@ -69,6 +74,11 @@ jobs:
       - name: Collect build artifacts
         run: |
           cp -v -t build_artifacts /tmp/x11-build/*.t?z testing/* extra/*
+      - uses: actions/upload-artifact@v4
+        with:
+          name: CI Build
+          path: build_artifacts
+          retention-days: 90
       - name: Get short commit hash with date and time
         id: git_short_hash_and_release_date
         run: |
